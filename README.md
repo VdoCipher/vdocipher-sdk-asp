@@ -26,7 +26,7 @@ Save the file VdoCipherSDK.asp at some place from where it can be included and u
 
 Improvements
 ----
-If you think this SDKcould have been better or there are more features that can be added to the SDK, please add
+If you think this SDKcould have been better or there are more features that can be added to the SDK, please add a new issue.
 
 License
 ----
