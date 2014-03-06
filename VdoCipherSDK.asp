@@ -1,6 +1,6 @@
 <SCRIPT LANGUAGE=JavaScript RUNAT=SERVER>
 	var VDOCIPHER = {
-		PostData: "clientSecretKey=b60ea897b1b19bc5586b03b9daf6decef6ba21de3737ca8234c5de2169ae0b87",
+		PostData: "clientSecretKey=CLIENT_SECRET_KEY",
 		type: "xml",
 		maxSeek: 25,
 		maxData: 250,
