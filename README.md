@@ -9,7 +9,7 @@ ASP, ASP.NET
 Version
 ----
 
-1.0
+Beta
 
 
 Installation
@@ -24,6 +24,9 @@ Save the file VdoCipherSDK.asp at some place from where it can be included and u
 </script>
 ```
 
+Improvements
+----
+If you think this SDKcould have been better or there are more features that can be added to the SDK, please add
 
 License
 ----
