@@ -1,36 +1,50 @@
-<SCRIPT LANGUAGE=JavaScript RUNAT=SERVER>
-	var VDOCIPHER = {
-		PostData: "clientSecretKey=CLIENT_SECRET_KEY",
-		type: "xml",
-		maxSeek: 25,
-		maxData: 250,
-		findByTitle: function(query){
-			this.sendCommand()
-		},
-		createOtp: function(){
-			this.sendCommand()
-		},
-		sendCommand: function(action, getData){
-			var ServerXmlHttp = Server.CreateObject("MSXML2.ServerXMLHTTP.6.0")
-			ServerXmlHttp.open("POST", "http://beta.vdocipher.com/index.php/?r=api/" + action + "&"+getData + "&type=xml")
-			ServerXmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-			ServerXmlHttp.send(this.PostData)
-			//Response.Write(ServerXmlHttp.responseText)
-			if(ServerXmlHttp.status == 200)
-				return ServerXmlHttp.responseXML
-			return null
-		},
-		playByTitle: function(title){
-			videoId = this.sendCommand('searchVideo', "videoName="+title)
-			videoId = videoId.getElementsByTagName('videoId')[0].text
-			otp = this.sendCommand('otp', 'videoId='+videoId)
-			otp = otp.getElementsByTagName('otp')[0].text
-			this.playByOtp(otp)
-		},
-		playByOtp: function(otp){
-			Response.Write('<iframe src="http://videos.vdocipher.com/utils/newplayer.php?autoplay=false&h=')
-			Response.Write(otp)
-			Response.Write('" scrolling="no" style="border:1px solid #999999;width:640px;height:400px;background-color:#999999"></iframe>')
-		}
-	}
-</SCRIPT>
+<%
+Class VdoCipherSDK
+    Public clientSecretKey
+    Public Property Get Secret()	
+        Secret = clientSecretKey
+    End Property
+    Public Property Set Secret(sMsg)	
+        clientSecretKey = sMsg
+    End Property
+    Private Sub Class_Initialize()	
+        clientSecretKey = "CLIENT_SECRET_KEY"
+    End Sub
+    Public Function searchByTitle(title)	
+		Set id = vdocipher_sendCommand("searchVideo", "videoName="+title)
+		Set oVDO = new VDO
+		oVDO.id=  id.getElementsByTagName("videoId").item(0).text
+        Set searchByTitle = oVDO
+    End Function
+
+    Private Sub Class_Terminate()	
+    End Sub
+End Class
+
+Public Function vdocipher_sendCommand(action, getData)
+	Set ServerXmlHttp = Server.CreateObject("MSXML2.ServerXMLHTTP.6.0")
+	ServerXmlHttp.open "POST", "http://www.vdocipher.com/api/" + action + "?"+getData + "&type=xml"
+	ServerXmlHttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+	ServerXmlHttp.send("clientSecretKey="+(new VdoCipherSDK).clientSecretKey)
+	Set vdocipher_sendCommand = ServerXmlHttp.ResponseXML
+End Function
+
+Class VDO
+	Public title
+	Public otp
+	Public height
+	Public width
+	Public id
+
+	Public Function getVideoInfo()
+		Response.Write("video info is not yet implemented")
+	End Function
+	Public Sub play()
+		Set otp = vdocipher_sendCommand("otp", "videoId="+id)
+		if not IsNull(otp) Then
+			otp_value = otp.getElementsByTagName("otp").item(0).text
+			Response.Write("<scr"+"ipt src='https://de122v0opjemw.cloudfront.net/utils/playerInit.php?otp="+otp_value+"&height="+height+"&width="+width+"'></"+"scr"+"ipt>")
+		End If
+	End Sub
+End Class
+%>
