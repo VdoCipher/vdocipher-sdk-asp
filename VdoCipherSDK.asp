@@ -29,7 +29,9 @@ Public Function vdocipher_sendCommand(action, getData)
 		Call Err.Raise(60001, "vdocipher", "Client key is not configured.")
 	End If
 	ServerXmlHttp.send("clientSecretKey="+(new VdoCipherSDK).clientSecretKey)
-	Response.Write(ServerXmlHttp.status)
+	if Not ServerXmlHttp.status = 200 Then
+		Call Err.Raise(60001, "vdocipher", "Invalid Response from server " + CStr(ServerXmlHttp.status))
+	End If
 	Set vdocipher_sendCommand = ServerXmlHttp.ResponseXML
 End Function
 
