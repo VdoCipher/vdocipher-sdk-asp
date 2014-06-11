@@ -49,6 +49,7 @@ Class VDO
 		Set otp = vdocipher_sendCommand("otp", "videoId="+id)
 		if not IsNull(otp) Then
 			otp_value = otp.getElementsByTagName("otp").item(0).text
+			Response.Write("<div id='vdo"+ otp_value +"' ></div>")
 			Response.Write("<scr"+"ipt src='https://de122v0opjemw.cloudfront.net/utils/playerInit.php?otp="+otp_value+"&height="+height+"&width="+width+"'></"+"scr"+"ipt>")
 		End If
 	End Sub
