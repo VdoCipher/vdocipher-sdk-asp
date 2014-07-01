@@ -32,6 +32,10 @@ Public Function vdocipher_sendCommand(action, getData)
 	if Not ServerXmlHttp.status = 200 Then
 		Call Err.Raise(60001, "vdocipher", "Invalid Response from server " + CStr(ServerXmlHttp.status))
 	End If
+	
+	If Not InStr(ServerXmlHttp.ResponseText, "No Video Found") = 0 Then
+		Call Err.Raise(60001, "vdocipher", "Video with given title not found.")
+	End If
 	Set vdocipher_sendCommand = ServerXmlHttp.ResponseXML
 End Function
 
