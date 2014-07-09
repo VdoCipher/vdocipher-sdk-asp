@@ -23,7 +23,7 @@ End Class
 
 Public Function vdocipher_sendCommand(action, getData)
 	Set ServerXmlHttp = Server.CreateObject("MSXML2.ServerXMLHTTP.6.0")
-	ServerXmlHttp.open "POST", "http://www.vdocipher.com/api/" + action + "?"+getData + "&type=xml"
+	ServerXmlHttp.open "POST", "http://api.vdocipher.com/v2/" + action + "?"+getData + "&type=xml"
 	ServerXmlHttp.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
 	if (new VdoCipherSDK).clientSecretKey = "CLIENT_SECRET_KEY" Then
 		Call Err.Raise(60001, "vdocipher", "Client key is not configured.")
