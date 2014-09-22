@@ -19,9 +19,13 @@ Save the file VdoCipherSDK.asp at some place from where it can be included and u
 
 ```asp
 <!--#include file="VdoCipherSDK.asp"-->
-<script language=Javascript runat=server>
-  var videoObject = VDOCIPHER.playByTitle("vdocipher_ad.flv");
-</script>
+<%
+  Set oVDOCIPHER = New VdoCipherSDK
+  Set videoObject = oVDOCIPHER.searchByTitle("name_of_video.mp4")
+  videoObject.height = "550"
+  videoObject.width = "700"
+  videoObject.play()
+%>
 ```
 
 Improvements
