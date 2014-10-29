@@ -44,13 +44,18 @@ Class VDO
 	Public otp
 	Public height
 	Public width
+	Public annotation
 	Public id
 
 	Public Function getVideoInfo()
 		Response.Write("video info is not yet implemented")
 	End Function
 	Public Sub play()
-		Set otp = vdocipher_sendCommand("otp", "videoId="+id)
+		Set queryparam = "otp", "videoId="+id
+		if not IsNull(annotation) Then
+			Set queryparam = queryparam + "annotate="+annotation
+		End If
+		Set otp = vdocipher_sendCommand(queryparam)
 		if not IsNull(otp) Then
 			otp_value = otp.getElementsByTagName("otp").item(0).text
 			Response.Write("<div id='vdo"+ otp_value +"' ></div>")
