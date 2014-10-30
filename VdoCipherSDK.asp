@@ -12,9 +12,13 @@ Class VdoCipherSDK
     End Sub
     Public Function searchByTitle(title)	
 		Set id = vdocipher_sendCommand("searchVideo", "videoName="+title)
-		Set oVDO = new VDO
-		oVDO.id=  id.getElementsByTagName("videoId").item(0).text
-        Set searchByTitle = oVDO
+		if not id is nothing then
+			Set oVDO = new VDO
+			oVDO.id=  id.getElementsByTagName("videoId").item(0).text
+			Set searchByTitle = oVDO
+		Else
+			Set searchByTitle = nothing
+		End If
     End Function
 
     Private Sub Class_Terminate()	
@@ -34,9 +38,11 @@ Public Function vdocipher_sendCommand(action, getData)
 	End If
 	
 	If Not InStr(ServerXmlHttp.ResponseText, "No Video Found") = 0 Then
-		Call Err.Raise(60001, "vdocipher", "Video with given title not found.")
+		Response.Write("Please contact us.")
+		Set vdocipher_sendCommand = Nothing
+	Else
+		Set vdocipher_sendCommand = ServerXmlHttp.ResponseXML
 	End If
-	Set vdocipher_sendCommand = ServerXmlHttp.ResponseXML
 End Function
 
 Class VDO
