@@ -10,16 +10,6 @@ Class VdoCipherSDK
     Private Sub Class_Initialize()	
         clientSecretKey = "CLIENT_SECRET_KEY"
     End Sub
-    Public Function searchByTitle(title)	
-		Set id = vdocipher_sendCommand("searchVideo", "videoName="+title)
-		if not id is nothing then
-			Set oVDO = new VDO
-			oVDO.id=  id.getElementsByTagName("videoId").item(0).text
-			Set searchByTitle = oVDO
-		Else
-			Set searchByTitle = nothing
-		End If
-    End Function
 
     Private Sub Class_Terminate()	
     End Sub

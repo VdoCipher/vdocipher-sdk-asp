@@ -6,9 +6,8 @@
 </head>
 <body>
 <%
- Set oVDOCIPHER = New VdoCipherSDK
- Set videoObject = oVDOCIPHER.searchByTitle("name_of_video.mp4")
- If Not videoObject is Nothing Then
+	videoObject = new VDO
+	videoObject.id = "video_id"
 	videoObject.height = "550"
 	videoObject.width = "700"
 	videoObject.play()
